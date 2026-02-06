@@ -13,8 +13,8 @@ class Student(BaseModel):
     name: str
     email: str
     age: int
-    roll_number: str
-    dept: str
+    Roll_no: str
+    Department: str
 
 
 class StudentResponse(BaseModel):
@@ -22,16 +22,16 @@ class StudentResponse(BaseModel):
     name: str
     email: str
     age: int
-    roll_number: str
-    dept: str
+    Roll_no: str
+    Department: str
 
 
 @app.get("/")
 def read_root():
-    return {"message": "Hello, FastAPI!"}
+    return {"Hello": "World"}
 
 
-@app.post("/student", response_model=StudentResponse)
+@app.post("/students", response_model=StudentResponse)
 def create_student(student: Student):
     global current_id
     student_data = student.model_dump()
@@ -41,7 +41,7 @@ def create_student(student: Student):
     return student_data
 
 
-@app.get("/student/{id}", response_model=StudentResponse)
+@app.get("/students/{id}", response_model=StudentResponse)
 def get_student(id: int):
     if id not in students_db:
         return {"error": "Student not found"}
@@ -53,7 +53,7 @@ def get_all_students():
     return list(students_db.values())
 
 
-@app.put("/student/{id}", response_model=StudentResponse)
+@app.put("/students/{id}", response_model=StudentResponse)
 def update_student(id: int, student: Student):
     if id not in students_db:
         return {"error": "Student not found"}
@@ -63,7 +63,7 @@ def update_student(id: int, student: Student):
     return student_data
 
 
-@app.delete("/student/{id}")
+@app.delete("/students/{id}")
 def delete_student(id: int):
     if id not in students_db:
         return {"error": "Student not found"}
